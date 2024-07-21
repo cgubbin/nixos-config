@@ -10,6 +10,12 @@
   # Since we're using fish as our shell
   programs.fish.enable = true;
 
+  # programs.ssh = {
+  #   extraConfig = ''
+  #     AllowAgentForwarding yes
+  #   '';
+  # };
+  #
   users.users.kitg = {
     isNormalUser = true;
     home = "/home/kitg";
