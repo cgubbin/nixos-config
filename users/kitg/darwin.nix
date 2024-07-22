@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{lazygit inputs, pkgs, ... }:
 
 {
   nixpkgs.overlays = import ../../lib/overlays.nix ++ [

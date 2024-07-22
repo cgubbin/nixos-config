@@ -29,16 +29,27 @@ in {
   # per-project flakes sourced with direnv and nix-shell, so this is
   # not a huge list.
   home.packages = [
-    pkgs.asciinema
+    pkgs.atuin
     pkgs.bat
+    pkgs.bottom
+    pkgs.direnv
+    pkgs.eza
     pkgs.fd
     pkgs.fzf
     pkgs.gh
     pkgs.htop
+    pkgs.hub
+    pkgs.hurl
     pkgs.jq
+    pkgs.just
+    pkgs.lazygit
+    pkgs.neofetch
+    pkgs.nushell
     pkgs.ripgrep
     pkgs.tree
     pkgs.watch
+    pkgs.zellij
+    pkgs.zoxide
 
     pkgs.plymouth
 
@@ -66,6 +77,7 @@ in {
     EDITOR = "nvim";
     PAGER = "less -FirSwX";
     MANPAGER = "${manpager}/bin/manpager";
+    BAT_THEME = "Dracula";
   };
 
   home.file.".gdbinit".source = ./gdbinit;
@@ -113,6 +125,7 @@ in {
     };
   };
 
+
   programs.direnv= {
     enable = true;
 
@@ -130,25 +143,45 @@ in {
       "source ${sources.theme-bobthefish}/functions/fish_right_prompt.fish"
       "source ${sources.theme-bobthefish}/functions/fish_title.fish"
       (builtins.readFile ./config.fish)
+      "atuin init fish | source"
       "set -g SHELL ${pkgs.fish}/bin/fish"
     ]));
 
-    shellAliases = {
+    shellAbbrs = {
+      g = "hub";
+      git = "hub";
+      gl = "hub l --color | devmoji --log --color | less -rXF";
+      lg = "lazygit";
+
       ga = "git add";
       gc = "git commit";
       gco = "git checkout";
       gcp = "git cherry-pick";
       gdiff = "git diff";
-      gl = "git prettylog";
+      gpl = "git prettylog";
       gp = "git push";
       gs = "git status";
       gt = "git tag";
-    } // (if isLinux then {
-      # Two decades of using a Mac has made this such a strong memory
-      # that I'm just going to keep it consistent.
-      pbcopy = "xclip";
-      pbpaste = "xclip -o";
-    } else {});
+
+      lll = "exa --color=always --icons --group-directories-first --all --long";
+      l = "ll";
+      la = "exa --color=always --icons --group-directories-first --all";
+      ls = "exa --color=always --icons --group-directories-first";
+      mkdir = "mkdir -vp";
+      mv = "mv -iv";
+      cp = "cp -riv";
+
+      cat = "bat";
+      grep = "rg";
+      rga = "rg -uu";
+      j = "just";
+
+      v = "nvim";
+      vi = "nvim";
+      vim = "nvim";
+
+      weather = "curl -s wttr.in/Norwich | grep -v Follow";
+    };
 
     plugins = map (n: {
       name = n;
