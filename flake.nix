@@ -35,6 +35,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    nixvim = {
+        url = "github:nix-community/nixvim";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+
     # Other packages
     # zig.url = "github:kitg/zig-overlay";
 

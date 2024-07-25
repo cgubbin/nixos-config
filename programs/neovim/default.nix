@@ -34,6 +34,7 @@ in
   home.packages = with pkgs; [
     gcc
     cmake
+    gnumake
     ripgrep
     fd
     lua-language-server

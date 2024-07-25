@@ -66,6 +66,10 @@ in {
     pkgs.xfce.xfce4-terminal
   ]);
 
+  imports = [
+      (import ../../programs/neovim { inputs = inputs; })
+  ];
+
   #---------------------------------------------------------------------
   # Env vars and dotfiles
   #---------------------------------------------------------------------
@@ -277,54 +281,53 @@ in {
     };
   };
 
-  programs.neovim = {
-    enable = true;
-    package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
-
-    withPython3 = true;
-
-    plugins = with pkgs; [
-      customVim.vim-copilot
-      customVim.vim-cue
-      customVim.vim-fish
-      customVim.vim-fugitive
-      customVim.vim-glsl
-      customVim.vim-misc
-      customVim.vim-pgsql
-      customVim.vim-tla
-      customVim.vim-zig
-      customVim.pigeon
-      customVim.AfterColors
-
-      customVim.vim-nord
-      customVim.nvim-cinnamon
-      customVim.nvim-comment
-      customVim.nvim-conform
-      customVim.nvim-lspconfig
-      customVim.nvim-plenary # required for telescope
-      customVim.nvim-telescope
-      customVim.nvim-treesitter
-      customVim.nvim-treesitter-playground
-      customVim.nvim-treesitter-textobjects
-
-      vimPlugins.vim-airline
-      vimPlugins.vim-airline-themes
-      vimPlugins.vim-eunuch
-      vimPlugins.vim-gitgutter
-
-      vimPlugins.vim-markdown
-      vimPlugins.vim-nix
-      vimPlugins.typescript-vim
-      vimPlugins.nvim-treesitter-parsers.elixir
-    ] ++ (lib.optionals (!isWSL) [
-      # This is causing a segfaulting while building our installer
-      # for WSL so just disable it for now. This is a pretty
-      # unimportant plugin anyway.
-      customVim.vim-devicons
-    ]);
-
-    extraConfig = (import ./vim-config.nix) { inherit sources; };
-  };
+  # programs.neovim = {
+  #  enable = true;
+  #  package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+  #  withPython3 = true;
+#
+#    plugins = with pkgs; [
+#      customVim.vim-copilot
+#      customVim.vim-cue
+#      customVim.vim-fish
+#      customVim.vim-fugitive
+#      customVim.vim-glsl
+#      customVim.vim-misc
+#      customVim.vim-pgsql
+#      customVim.vim-tla
+#      customVim.vim-zig
+#      customVim.pigeon
+#      customVim.AfterColors
+#
+#      customVim.vim-nord
+#      customVim.nvim-cinnamon
+#      customVim.nvim-comment
+#      customVim.nvim-conform
+#      customVim.nvim-lspconfig
+#      customVim.nvim-plenary # required for telescope
+#      customVim.nvim-telescope
+#      customVim.nvim-treesitter
+#      customVim.nvim-treesitter-playground
+#      customVim.nvim-treesitter-textobjects
+#
+ #     vimPlugins.vim-airline
+ #     vimPlugins.vim-airline-themes
+ #     vimPlugins.vim-eunuch
+ #     vimPlugins.vim-gitgutter
+#
+#      vimPlugins.vim-markdown
+#      vimPlugins.vim-nix
+#      vimPlugins.typescript-vim
+#      vimPlugins.nvim-treesitter-parsers.elixir
+#    ] ++ (lib.optionals (!isWSL) [
+#      # This is causing a segfaulting while building our installer
+#      # for WSL so just disable it for now. This is a pretty
+#      # unimportant plugin anyway.
+#      customVim.vim-devicons
+#    ]);
+#
+#    extraConfig = (import ./vim-config.nix) { inherit sources; };
+#  };
 
   services.gpg-agent = {
     enable = isLinux;
