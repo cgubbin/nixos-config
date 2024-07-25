@@ -1,7 +1,7 @@
 return {
     {
         "mfussenegger/nvim-dap",
-        lazy = true,
+        -- lazy = true,
         dependencies = {
             { "rcarriga/nvim-dap-ui" },
             { "nvim-neotest/nvim-nio" },
@@ -9,6 +9,13 @@ return {
         config = function()
             local dap = require("dap")
             local dapui = require("dapui")
+
+            local adapters = require("kit.plugins.dap.adapters")
+            local configurations = require("kit.plugins.dap.configurations")
+
+            adapters.setup(dap)
+            configurations.setup(dap)
+
 
             dap.set_log_level("INFO")
 
@@ -58,7 +65,7 @@ return {
                 dap.continue()
                 dapui.toggle({})
                 vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false) -- buffers spaces evenly
-            end,
+            end)
 
             vim.keymap.set("n", "<leader>dl", require("dap.ui.widgets").hover)
             vim.keymap.set("n", "<leader>dc", dap.continue)
@@ -66,7 +73,7 @@ return {
             vim.keymap.set("n", "<leader>dn", dap.step_over)
             vim.keymap.set("n", "<leader>di", dap.step_into)
             vim.keymap.set("n", "<leader>do", dap.step_out)
-            vim.keymap.set("n", "<leader>dC",  function()
+            vim.keymap.set("n", "<leader>dC", function()
                 dap.clear_breakpoints()
                 require("notify")("Breakpoints cleared", "warn", { title = "Dap" })
             end)
@@ -77,9 +84,8 @@ return {
                 dapui.toggle({})
                 dap.terminate()
                 vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>=", false, true, true), "n", false) -- buffers spaces evenly
-                repuire("notify").notify("DAP Session Ended", "warn", { title = "Dap" })
+                require("notify").notify("DAP Session Ended", "warn", { title = "Dap" })
             end)
-
         end,
 
     },
