@@ -11,7 +11,7 @@ return {
             local dapui = require("dapui")
 
             local adapters = require("kit.plugins.dap.adapters")
-            local configurations = require("kit.plugins.dap.configurations")
+            local configurations = require("kit.plugins.dap.config")
 
             adapters.setup(dap)
             configurations.setup(dap)

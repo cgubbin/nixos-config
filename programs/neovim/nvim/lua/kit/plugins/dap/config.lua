@@ -1,7 +1,7 @@
 local rust = {
     {
         name = "Launch",
-        type = "codelldb",
+        type = "gdb",
         request = "launch",
         program = function()
             return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")

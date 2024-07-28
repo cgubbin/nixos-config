@@ -10,6 +10,9 @@ return {
     config = function()
         local lsp_zero = require("lsp-zero")
 
+
+        lsp_zero.skip_server_setup({ 'rust_analyzer' })
+
         -- local lsp_config = require("lspconfig")
         -- local cmp_nvim_lsp = require("cmp_nvim_lsp")
         -- local keymap = vim.keymap
@@ -24,7 +27,9 @@ return {
             })
         end)
 
-        require("lazy-lsp").setup {}
+        require("lazy-lsp").setup {
+            excluded_servers = { "rust_analyzer" },
+        }
     end,
 }
 
